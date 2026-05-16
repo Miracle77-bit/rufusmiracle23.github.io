@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rufus Miracle · Admin & Creative Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #111111;
+      --bg-3: #161616;
+      --bg-4: #1c1c1c;
+      --border: #242424;
+      --border-2: #2e2e2e;
+      --purple: #9b5de5;
+      --purple-dark: #6d28d9;
+      --purple-dim: #2a1650;
+      --purple-glow: rgba(155, 93, 229, 0.15);
+      --teal: #4ecdc4;
+      --teal-dim: #0d2e2c;
+      --text: #f0f0f0;
+      --text-2: #a0a0a0;
+      --text-3: #555;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 48px;
+      height: 60px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo span { color: var(--purple); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-weight: 400;
+    }
+
+    .nav-links a:hover { color: var(--purple); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 48px 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg-circle {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(155,93,229,0.12) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(155,93,229,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(155,93,229,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--purple);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 20px;
+      padding: 6px 14px;
+      background: var(--purple-dim);
+      border: 0.5px solid rgba(155,93,229,0.3);
+      border-radius: 20px;
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(52px, 8vw, 88px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .hero-name .accent { color: var(--purple); }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #8b4dd4;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-2);
+      border: 0.5px solid var(--border-2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    /* ── CONTACT BAR ── */
+    .contact-bar {
+      background: var(--bg-2);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 24px;
+      font-size: 13px;
+      color: var(--text-2);
+      border-right: 0.5px solid var(--border);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .contact-item:first-child { padding-left: 0; }
+
+    .contact-item:hover { color: var(--purple); background: var(--purple-glow); }
+
+    .contact-item i { color: var(--purple); font-size: 14px; }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 80px 48px;
+      border-bottom: 0.5px solid var(--border);
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .exp-card {
+      background: var(--bg-2);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .exp-card:hover { border-color: rgba(155,93,229,0.4); transform: translateY(-3px); }
+    .exp-card:hover::before { opacity: 1; }
+
+    .exp-org {
+      font-size: 11px;
+      color: var(--purple);
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .exp-pos {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .exp-date {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .exp-date i { font-size: 11px; }
+
+    .exp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .exp-list li {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.65;
+      padding-left: 16px;
+      position: relative;
+      font-weight: 300;
+    }
+
+    .exp-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--purple);
+      opacity: 0.6;
+    }
+
+    /* ── SKILLS ── */
+    .skills-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .skill-group-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-group-title i { color: var(--purple); font-size: 14px; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .tag-purple {
+      background: var(--purple-dim);
+      border: 0.5px solid rgba(155,93,229,0.35);
+      color: #c084fc;
+    }
+
+    .tag-teal {
+      background: var(--teal-dim);
+      border: 0.5px solid rgba(78,205,196,0.3);
+      color: var(--teal);
+    }
+
+    .tag-gray {
+      background: var(--bg-4);
+      border: 0.5px solid var(--border-2);
+      color: var(--text-2);
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: var(--bg-2);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      max-width: 500px;
+    }
+
+    .edu-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--purple-dim);
+      border: 0.5px solid rgba(155,93,229,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .edu-icon-wrap i {
+      font-size: 24px;
+      color: var(--purple);
+    }
+
+    .edu-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .edu-jurusan {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+
+    .edu-tahun {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--purple);
+      background: var(--purple-dim);
+      padding: 3px 12px;
+      border-radius: 20px;
+      border: 0.5px solid rgba(155,93,229,0.3);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--text-3);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-name    { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-desc    { animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+    .hero-stats   { animation: fadeUp 0.6s 0.4s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 80px 20px 60px; }
+      section { padding: 60px 20px; }
+      .contact-bar { padding: 0 20px; }
+      .exp-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">RUFUS <span>✦</span></div>
+    <ul class="nav-links">
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#pengalaman">Pengalaman</a></li>
+      <li><a href="#skill">Skill</a></li>
+      <li><a href="#pendidikan">Pendidikan</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="tentang">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-circle"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <i class="fa-solid fa-circle" style="font-size:6px;"></i>
+        Admin & Creative Digital · Batam
+      </div>
+      <h1 class="hero-name">RUFUS<br><span class="accent">MIRACLE</span></h1>
+      <p class="hero-desc">
+        Lulusan SMK jurusan Teknik Komputer dan Jaringan dengan pengalaman praktik di bidang administrasi perkantoran dan desain grafis. Terbiasa bekerja dalam tim, mampu membuat materi promosi, mengelola dokumen, serta mengoperasikan perangkat kantor.
+      </p>
+      <div class="hero-actions">
+        <a href="mailto:rufusmiracle23@gmail.com" class="btn btn-primary">
+          <i class="fa-solid fa-envelope"></i> Hubungi Saya
+        </a>
+        <a href="#pengalaman" class="btn btn-outline">
+          Lihat Pengalaman <i class="fa-solid fa-arrow-down"></i>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Pengalaman Kerja</div>
+        </div>
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Bidang Keahlian</div>
+        </div>
+        <div>
+          <div class="stat-num">2026</div>
+          <div class="stat-label">Lulus SMK</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT BAR -->
+  <div class="contact-bar" id="kontak">
+    <a class="contact-item" href="tel:+6285837786078">
+      <i class="fa-solid fa-phone"></i> +62 858-3778-6078
+    </a>
+    <a class="contact-item" href="mailto:rufusmiracle23@gmail.com">
+      <i class="fa-solid fa-envelope"></i> rufusmiracle23@gmail.com
+    </a>
+    <div class="contact-item">
+      <i class="fa-solid fa-location-dot"></i> Batam, Kepulauan Riau
+    </div>
+  </div>
+
+  <!-- PENGALAMAN -->
+  <section id="pengalaman">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Riwayat</div>
+        <h2 class="section-title">Pengalaman Kerja</h2>
+      </div>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <div class="exp-org"><i class="fa-solid fa-building" style="margin-right:5px;"></i>Nongsa Digital Park, Batam</div>
+        <div class="exp-pos">Program Siswa Belajar di Iduka (PSBI)</div>
+        <div class="exp-date"><i class="fa-regular fa-calendar"></i> 22 Juli 2024 – 25 Oktober 2024</div>
+        <ul class="exp-list">
+          <li>Menangani konfigurasi dan instalasi perangkat operasional kantor meliputi printer, laptop, dan AC.</li>
+          <li>Memastikan akurasi data kehadiran karyawan melalui rekap absensi harian.</li>
+          <li>Mengelola pengarsipan dokumen masuk dan melakukan seleksi berkas sesuai kebutuhan operasional.</li>
+        </ul>
+      </div>
+      <div class="exp-card">
+        <div class="exp-org"><i class="fa-solid fa-building" style="margin-right:5px;"></i>PKBM Budiman Drestanta Tiyasa</div>
+        <div class="exp-pos">Praktik Kerja Lapangan (PKL)</div>
+        <div class="exp-date"><i class="fa-regular fa-calendar"></i> 22 September 2025 – 27 Februari 2026</div>
+        <ul class="exp-list">
+          <li>Menjalankan strategi promosi dan sosialisasi program ke sekolah-sekolah sebagai sales promosi.</li>
+          <li>Memproduksi materi pemasaran berupa brosur dan konten video untuk mendukung visibilitas lembaga.</li>
+          <li>Mengembangkan aset pembelajaran digital: e-komik, e-book, dan video terjemahan Indonesia–Inggris.</li>
+          <li>Mengoperasikan dan memastikan kesiapan perangkat pembelajaran seperti proyektor dan laptop.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILL -->
+  <section id="skill">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Kemampuan</div>
+        <h2 class="section-title">Keahlian</h2>
+      </div>
+    </div>
+    <div class="skills-layout">
+      <div>
+        <div class="skill-group-title"><i class="fa-solid fa-laptop"></i> Microsoft Office</div>
+        <div class="tags">
+          <span class="tag tag-purple">Word</span>
+          <span class="tag tag-purple">Excel</span>
+          <span class="tag tag-purple">PowerPoint</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title"><i class="fa-solid fa-palette"></i> Desain Grafis & Konten Digital</div>
+        <div class="tags">
+          <span class="tag tag-teal">Canva</span>
+          <span class="tag tag-teal">CapCut</span>
+          <span class="tag tag-teal">Desain Brosur</span>
+          <span class="tag tag-teal">Konten Video</span>
+          <span class="tag tag-teal">E-Komik & E-Book</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title"><i class="fa-solid fa-bullhorn"></i> Pemasaran & Komunikasi</div>
+        <div class="tags">
+          <span class="tag tag-gray">Promosi & Sosialisasi</span>
+          <span class="tag tag-gray">Kepemimpinan Tim</span>
+          <span class="tag tag-gray">Manajemen Dokumen</span>
+          <span class="tag tag-gray">Rekap Data & Absensi</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENDIDIKAN -->
+  <section id="pendidikan">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Latar Belakang</div>
+        <h2 class="section-title">Pendidikan</h2>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-icon-wrap">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <div class="edu-name">SMK Negeri 7 Batam</div>
+        <div class="edu-jurusan">Teknik Komputer & Jaringan</div>
+        <div class="edu-tahun">Lulus 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">RUFUS MIRACLE</div>
+    <div class="footer-copy">© 2026 · Admin & Creative Digital · Batam</div>
+  </footer>
+
+</body>
+</html>
